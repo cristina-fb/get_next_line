@@ -8,4 +8,5 @@ char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
-char    *search_end_line(char *str);
+void	*save_line(char *buffer, char *str);
+void	read_line(int fd, char *str);

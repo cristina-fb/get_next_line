@@ -91,11 +91,33 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char    *search_end_line(char *str)
+void	*save_line(char *buffer, char *str)
 {
-    char    *s;
-    s = ft_strchr(str, '\n');
-    if (!s)
-        return (ft_strchr(str, '\0'));
-    return (s);
+	if (!str)
+		str = ft_strdup(buffer);
+	else
+		str = ft_strjoin(str, buffer);
+}
+
+void	read_line(int fd, char *str)
+{
+	int flag;
+	int n_bytes;
+	char buffer[BUFFER_SIZE + 1];
+
+	flag = 1;
+	while (flag)
+	{
+    	int n;
+    	n_bytes = read(fd, buffer, BUFFER_SIZE);
+		buffer[n_bytes] = 0;
+    	if (n_bytes == 0)
+			flag = 0;
+    	else
+		{
+        	if ((n_bytes != BUFFER_SIZE) || (ft_strchr(buffer, '\n'))
+            	flag = 0;
+        	save_line(buffer, str);
+		}
+	}
 }
