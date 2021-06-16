@@ -19,11 +19,9 @@ char	*read_text(int fd, char *str, char *buffer)
 				free(str);
 				str = aux;
 			}
-			if (n_bytes != BUFFER_SIZE)
-				break ;
 		}
-		else
-			return (0);
+		if (n_bytes != BUFFER_SIZE)
+			break ;
 	}
 	return (str);
 }
@@ -36,12 +34,12 @@ char	*save_line(char *str, char **line)
 	if (pos)
 	{
 		line[0] = ft_substr(str, 0, pos - str);
-		pos = ft_strdup(ft_strchr(str, '\n') + 1);
+		pos = ft_strdup(pos + 1);
 	}
 	else
 	{
 		line[0]= ft_strdup(str);
-		pos = ft_strdup("");
+		pos = 0;
 	}
 	free(str);
 	return (pos);
@@ -69,20 +67,21 @@ int	get_next_line(int fd, char **line)
 	return (-1);
 }
 
-int main()
+/*int main()
 {
 	int 	fd;
 	char	*line;
 	int		i = 0;
+	int		a = 0;
 
 	fd = open("prueba.txt", O_RDONLY);
 	while (i < 2)
 	{
-		get_next_line(fd, &line);
-		printf("|%s|\n", line);
+		a = get_next_line(fd, &line);
+		printf("|%s|%p %d\n", line, line, a);
 		i++;
 		free(line);
 	}
 	system("leaks a.out");
 	close(fd);
-}
+}*/
