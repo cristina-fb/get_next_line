@@ -6,7 +6,7 @@
 /*   By: crisfern <crisfern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:43:47 by crisfern          #+#    #+#             */
-/*   Updated: 2021/06/16 14:58:51 by crisfern         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:07:15 by crisfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*read_text(int fd, char *str, char *buffer)
 
 	n_bytes = read(fd, buffer, BUFFER_SIZE);
 	if ((n_bytes == 0) && !str)
-		return(ft_strdup(""));
+		return (ft_strdup(""));
 	if (n_bytes < 0)
-		return(0);
+		return (0);
 	while (n_bytes > 0)
 	{
 		buffer[n_bytes] = 0;
@@ -33,7 +33,7 @@ char	*read_text(int fd, char *str, char *buffer)
 			free(str);
 			str = aux;
 		}
-		if (ft_strchr(str,'\n'))
+		if (ft_strchr(str, '\n'))
 			break ;
 		n_bytes = read(fd, buffer, BUFFER_SIZE);
 	}
@@ -72,28 +72,9 @@ int	get_next_line(int fd, char **line)
 	{
 		str = save_line(str, line);
 		if (str)
-			return(1);
+			return (1);
 		free(str);
 		return (0);
 	}
 	return (-1);
 }
-
-/*int main()
-{
-	int 	fd;
-	char	*line;
-	int		i = 0;
-	int		a = 0;
-
-	fd = open("prueba.txt", O_RDONLY);
-	while (i < 3)
-	{
-		a = get_next_line(fd, &line);
-		printf("|%s| %d\n", line, a);
-		i++;
-		free(line);
-		//system("leaks a.out");
-	}
-	close(fd);
-}*/
