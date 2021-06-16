@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: crisfern <crisfern@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/16 11:43:47 by crisfern          #+#    #+#             */
+/*   Updated: 2021/06/16 14:58:51 by crisfern         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*read_text(int fd, char *str, char *buffer)
@@ -5,23 +17,25 @@ char	*read_text(int fd, char *str, char *buffer)
 	char	*aux;
 	int		n_bytes;
 
-	while (1)
+	n_bytes = read(fd, buffer, BUFFER_SIZE);
+	if ((n_bytes == 0) && !str)
+		return(ft_strdup(""));
+	if (n_bytes < 0)
+		return(0);
+	while (n_bytes > 0)
 	{
-		n_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (n_bytes >= 0)
+		buffer[n_bytes] = 0;
+		if (!str)
+			str = ft_strdup(buffer);
+		else
 		{
-			buffer[n_bytes] = 0;
-			if (!str)
-					str = ft_strdup(buffer);
-			else
-			{
-				aux = ft_strjoin(str, buffer);
-				free(str);
-				str = aux;
-			}
+			aux = ft_strjoin(str, buffer);
+			free(str);
+			str = aux;
 		}
-		if (n_bytes != BUFFER_SIZE)
+		if (ft_strchr(str,'\n'))
 			break ;
+		n_bytes = read(fd, buffer, BUFFER_SIZE);
 	}
 	return (str);
 }
@@ -34,7 +48,7 @@ char	*save_line(char *str, char **line)
 	if (pos)
 	{
 		*line = ft_substr(str, 0, pos - str);
-		pos = ft_strdup(pos);
+		pos = ft_strdup(pos + 1);
 	}
 	else
 	{
@@ -48,26 +62,18 @@ char	*save_line(char *str, char **line)
 int	get_next_line(int fd, char **line)
 {
 	static char	*str;
-	char		*aux;
 	char		*buffer;
-	
-	if (!str)
-	{
-		buffer = malloc(BUFFER_SIZE + 1);
-		if (buffer)
-			str = read_text(fd, str, buffer);
-		free(buffer);
-	}
+
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (buffer)
+		str = read_text(fd, str, buffer);
+	free(buffer);
 	if (str)
 	{
 		str = save_line(str, line);
-		if (ft_strlen(str))
-		{
-			aux = ft_strdup(str + 1);
-			free(str);
-			str = aux;
+		if (str)
 			return(1);
-		}
+		free(str);
 		return (0);
 	}
 	return (-1);
@@ -81,12 +87,13 @@ int	get_next_line(int fd, char **line)
 	int		a = 0;
 
 	fd = open("prueba.txt", O_RDONLY);
-	while (i < 2)
+	while (i < 3)
 	{
 		a = get_next_line(fd, &line);
 		printf("|%s| %d\n", line, a);
 		i++;
 		free(line);
+		//system("leaks a.out");
 	}
 	close(fd);
 }*/
