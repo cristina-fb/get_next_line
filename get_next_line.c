@@ -33,12 +33,12 @@ char	*save_line(char *str, char **line)
 	pos = ft_strchr(str, '\n');
 	if (pos)
 	{
-		line[0] = ft_substr(str, 0, pos - str);
-		pos = ft_strdup(pos + 1);
+		*line = ft_substr(str, 0, pos - str);
+		pos = ft_strdup(pos);
 	}
 	else
 	{
-		line[0]= ft_strdup(str);
+		*line = ft_strdup(str);
 		pos = 0;
 	}
 	free(str);
@@ -48,6 +48,7 @@ char	*save_line(char *str, char **line)
 int	get_next_line(int fd, char **line)
 {
 	static char	*str;
+	char		*aux;
 	char		*buffer;
 	
 	if (!str)
@@ -61,7 +62,12 @@ int	get_next_line(int fd, char **line)
 	{
 		str = save_line(str, line);
 		if (ft_strlen(str))
+		{
+			aux = ft_strdup(str + 1);
+			free(str);
+			str = aux;
 			return(1);
+		}
 		return (0);
 	}
 	return (-1);
@@ -78,10 +84,9 @@ int	get_next_line(int fd, char **line)
 	while (i < 2)
 	{
 		a = get_next_line(fd, &line);
-		printf("|%s|%p %d\n", line, line, a);
+		printf("|%s| %d\n", line, a);
 		i++;
 		free(line);
 	}
-	system("leaks a.out");
 	close(fd);
 }*/
