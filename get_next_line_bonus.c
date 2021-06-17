@@ -6,11 +6,11 @@
 /*   By: crisfern <crisfern@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:43:47 by crisfern          #+#    #+#             */
-/*   Updated: 2021/06/16 16:54:24 by crisfern         ###   ########.fr       */
+/*   Updated: 2021/06/17 12:41:34 by crisfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*read_text(int fd, char *str, char *buffer)
 {

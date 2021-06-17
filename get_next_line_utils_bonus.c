@@ -6,11 +6,11 @@
 /*   By: crisfern <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:44:13 by crisfern          #+#    #+#             */
-/*   Updated: 2021/06/16 11:44:14 by crisfern         ###   ########.fr       */
+/*   Updated: 2021/06/17 12:42:00 by crisfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
